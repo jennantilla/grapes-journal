@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GRAPES Journal</title>
+</head>
+<body>
+    {% for entry in entries %}
+    <div>
+        <h3>{{ entry.date}}</h3>
+        <p>{{ entry.grateful }} </p>
+        <p>{{ entry.resolution }} </p>
+        <p>{{ entry.affirmation }} </p>
+        <p>{{ entry.proud }} </p>
+        <p>{{ entry.excited }} </p>
+    </div>
+
+    {% endfor %}
+
+</body>
+</html>
