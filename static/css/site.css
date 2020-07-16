@@ -1,0 +1,40 @@
+html,
+body {
+    height: 100%;
+    background-color: #ac60cc;
+/*  font-family: 'Source Sans Pro', sans-serif;*/
+    z-index: 0;
+}
+
+textarea {
+    width: 75%;
+}
+
+.acronym {
+    font-size: 35px;
+}
+
+#grapes-prompt {
+    padding-left: 150px;
+}
+
+.journal-field {
+    font-size: 18px;
+}
+
+#journal-date {
+    padding-top: 30px;
+}
+
+#journal-page {
+    background-color: white;
+    margin: 5px;
+}
+
+#today-entry {
+    background-image: url("/static/images/open-notebook.png");
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 5px;
+}

@@ -1,25 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>GRAPES Journal</title>
-</head>
-<body>
-    <h1>GRAPES</h1>
-    <h2>A quick, everyday journal</h2>
+{% extends 'base.html' %}
 
-    <form action="/register" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" name="name">
+{% block title %}GRAPES{% endblock %}
 
-        <label for="email">Email:</label>
-        <input type="email" name="email">
-    
+{% block content %}
 
-        <label for="password">Password:</label>
-        <input type="password" name="password">
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>GRAPES</h1>
+            <h2>A quick, everyday mindset journal</h2>
+        </div>
+    </div>
+</div>
 
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Sign Up</h3>
+            <form action="/register" method="POST">
+                <label for="name">Name:</label>
+                    <input type="text" name="name">
+                <label for="email">Email:</label>
+                    <input type="email" name="email">
+                <label for="password">Password:</label>
+                    <input type="password" name="password">
+                <input type="submit" value="Create Account">
+            </form>
+        </div>
+    </div>
+</div>
 
-        <input type="submit" value="Create Account">
-    </form>
-</body>
-</html>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Log In</h3>
+            <form action="/login" method="POST">
+                <label for="email">Email:</label>
+                    <input type="email" name="email">
+                <label for="password">Password:</label>
+                    <input type="password" name="password">
+                <input type="submit" value="Log in">
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

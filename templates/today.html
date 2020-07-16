@@ -1,29 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>GRAPES Journal</title>
-</head>
-<body>
-    <form action="/entry" method="POST">
-        <label for="grateful">Grateful</label>
-            <input class="journal-field" id="grateful" name="grateful">
-        <br>
-        <label for="resolutions">Resolutions</label>
-            <input class="journal-field" id="resolutions" name="resolutions">
-        <br>
-        <label for="affirmation">Affirmation</label>
-            <input class="journal-field" id="affirmation" name="affirmation">
-        <br>
-        <label for="proud">Proud</label>
-            <input class="journal-field" id="proud" name="proud">
-        <br>
-        <label for="excited">Excited</label>
-            <input class="journal-field" id="excited" name="excited">
-        <br>
-        <label for="schedule">Schedule</label>
-            <input class="journal-field" id="schedule" name="schedule">
-        <br>
-            <input type="submit" value="complete journal">
-    </form>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}GRAPES{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row" id="today-entry">
+        <div id="grapes-prompt" class="col-5">
+            <h3 id="journal-date">{{ today.strftime("%B %d, %Y") }}</h3>
+            <form action="/entry" method="POST">
+                <label for="mood"><h4>How are you feeling today?</h4></label>
+                <br>
+                <input type="radio" name="mood" value="unripe" />Unripe
+                    <label for="unripe"><!-- <img src="https://i.pinimg.com/originals/ea/0c/95/ea0c953772b75cfd50dee8287d9eb1e3.jpg" width="30px"> --></label>  
+                <input type="radio" name="mood" value="sweet">Sweet
+                    <label for="sweet"><!-- <img src="https://previews.123rf.com/images/stockgiu/stockgiu1705/stockgiu170507652/79181671-kawaii-cute-happy-grape-fruit-vector-illustration.jpg" width="50px"> --></label>
+                <input type="radio" name="mood" value="sour">Sour
+                <input type="radio" name="mood" value="rotten">Rotten
+                <br>
+                <br>
+                <label for="grateful" class="acronym">G</label>
+                    <input class="journal-field" id="grateful" name="grateful" placeholder="I am GRATEFUL for...">
+                <br>
+                <label for="resolutions" class="acronym">R</label>
+                    <input class="journal-field" id="resolutions" name="resolutions" placeholder="I RESOLVE to...">
+                <br>
+                <label for="affirmation" class="acronym">A</label>
+                    <input class="journal-field" id="affirmation" name="affirmation" placeholder="I AFFIRM that...">
+                <br>
+                <label for="proud" class="acronym">P</label>
+                    <input class="journal-field" id="proud" name="proud" placeholder="I am PROUD of...">
+                <br>
+                <label for="excited" class="acronym">E</label>
+                    <input class="journal-field" id="excited" name="excited" placeholder="I am EXCITED to...">
+                <br>
+                <label for="simplify" class="acronym">S</label>
+                    <input class="journal-field" id="simplify" name="simplify" placeholder="I can SIMPLIFY today by...">
+                <br>
+                <br>
+                    <input type="submit" value="complete today's journal">
+                <br>
+                <br>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,20 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>GRAPES Journal</title>
-</head>
-<body>
-    {% for entry in entries %}
-    <div>
-        <h3>{{ entry.date}}</h3>
-        <p>{{ entry.grateful }} </p>
-        <p>{{ entry.resolution }} </p>
-        <p>{{ entry.affirmation }} </p>
-        <p>{{ entry.proud }} </p>
-        <p>{{ entry.excited }} </p>
+{% extends 'base.html' %}
+
+{% block title %}GRAPES{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2>{{ user.name }}'s Journal Entries</h2>
+        </div>
     </div>
 
-    {% endfor %}
 
-</body>
-</html>
+{% if entries %}
+    <div class="row">
+        {% for entry in entries %}
+            <div class="col" id="journal-page">                
+                <h5>{{ (entry.date).strftime("%B %d, %Y") }}</h5>
+                <ul>
+                    <li class="journal-field">Grateful: {{ entry.grateful }}</li>
+                    <li class="journal-field">Resolution: {{ entry.resolution }}</li>
+                    <li class="journal-field">Affirmation: {{ entry.affirmation }}</li>
+                    <li class="journal-field">Proud: {{ entry.proud }}</li>
+                    <li class="journal-field">Excited: {{ entry.excited }}</li>
+                    <li class="journal-field">Simplify: {{ entry.simplify }}</li>
+                </ul>
+            </div>         
+        {% endfor %}
+    </div>
+</div>
+
+{% else %}
+<h3>Your journal is empty! Navigate to the 'Today' tab to complete your first entry.</h3>
+{% endif %}
+
+
+{% endblock %}

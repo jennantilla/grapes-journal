@@ -2,9 +2,10 @@ from flask import Flask, redirect, request, render_template, session, flash, jso
 from flask_debugtoolbar import DebugToolbarExtension
 from jinja2 import StrictUndefined
 
+from datetime import timedelta, date, datetime
+
 import requests
 import json
-from datetime import timedelta, date, datetime
 
 from model import connect_to_db, db, User, Entry
 
@@ -39,7 +40,7 @@ def log_in():
 
     session["user_id"] = user.user_id
 
-    return redirect(f"/kits/{user.user_id}")
+    return redirect(f"/today/{user.user_id}")
 
 
 @app.route("/register", methods=["POST"])
@@ -62,34 +63,38 @@ def add_user():
 
 
 @app.route("/today/<int:user_id>")
-def show_kits(user_id):
+def show_today(user_id):
     """Displays today's journal"""
 
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
 
+    today = datetime.today()
+
     return render_template("today.html",
                                 user_id=user_id,
-                                user=user)
+                                user=user, 
+                                today=today)
 
 
 @app.route("/entry", methods=["POST"])
 def add_entry():
     """Adds an entry to the db"""
     user_id = session.get("user_id")
+    mood = request.form.get("mood")
     grateful = request.form.get("grateful")
     resolution = request.form.get("resolutions")
     affirmation = request.form.get("affirmation")
     proud = request.form.get("proud")
     excited = request.form.get("excited")
-    schedule = request.form.get("schedule")
+    simplify = request.form.get("simplify")
 
-    new_entry = Entry(user_id=user_id, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, schedule=schedule)
+    new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, simplify=simplify)
 
     db.session.add(new_entry)
     db.session.commit()
 
-    flash(f"journal completed")
+    flash(f"Today's entry was added to your journal!")
 
     return redirect(f"/journal/{user_id}")
 
@@ -101,37 +106,12 @@ def show_entire_journal(user_id):
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
     
-    # get all entries belonging to a specific to user 
     entries = Entry.query.filter_by(user_id=user_id).all()
 
     return render_template("journal.html",
                             user=user,
                             entries=entries)
 
-
-
-# @app.route("/edit-item", methods=["POST"])
-# def edit_item():
-#     """Edits an existing goal in the db"""
-#     user_id = session.get("user_id")
-#     kit_id = request.form.get("kit-id")
-#     item_id = request.form.get("item-id")
-#     description = request.form.get("description")
-#     category = request.form.get("category")
-#     quantity = request.form.get("quantity")
-#     expiration = request.form.get("expiration")
-
-#     kit_item = (Supply_Item.query.filter_by(item_id=item_id).first())
-
-#     kit_item.item_description = description
-#     kit_item.category = category
-#     kit_item.expiration_date = expiration
-#     kit_item.quantity = quantity
-#     db.session.commit()
-
-#     flash(f"{description} updated")
-
-#     return redirect(f"/supplies/{user_id}")
 
 
 @app.route("/logout")

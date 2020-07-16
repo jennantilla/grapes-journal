@@ -26,12 +26,13 @@ class Entry(db.Model):
     entry_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), index=True)
     date = db.Column(db.DateTime, default=datetime.now)
+    mood = db.Column(db.String(100))
     grateful = db.Column(db.String(1000))
     resolution = db.Column(db.String(1000))
     affirmation = db.Column(db.String(1000))
     proud = db.Column(db.String(1000))
     excited = db.Column(db.String(1000))
-    schedule = db.Column(db.String(1000))
+    simplify = db.Column(db.String(1000))
 
     # Define relationship to User
     user = db.relationship("User", backref=db.backref("user_entries"))
