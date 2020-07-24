@@ -6,12 +6,77 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2>{{ user.name }}'s Journal Entries</h2>
+            <h1>{{ user.name }}'s Vineyard</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <p><em>random affirmation.</em> -{{ user.name }}, 2020</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Monthly Stats</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p>Entry frequency</p>
+            <p>Habit success rate</p>
+            <p>Average mood</p>
+        </div>
+        <div class="col">
+            <p>Streak</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Daily Habits</h3>
         </div>
     </div>
 
+    {% if habits %}
+        {% for habit in habits %}
+            <div class="row">
+                <div class="col">
+                    <p>{{ habit.habit }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col">
+            <h5>Add a habit you'd like to track daily</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/habit" method="POST">
+                <label for="habit"></label>
+                    <input id="habit" name="habit">
+                <input type="submit">
+        </div>
+    </div>
+</div>
+
 
 {% if entries %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Journal Entries</h3>
+        </div>
+    </div>
     <div class="row">
         {% for entry in entries %}
             <div class="col" id="journal-page">                
@@ -30,7 +95,13 @@
 </div>
 
 {% else %}
-<h3>Your journal is empty! Navigate to the 'Today' tab to complete your first entry.</h3>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h3>Your journal is empty! Navigate to the 'Today' tab to complete your first entry.</h3>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 

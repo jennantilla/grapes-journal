@@ -7,7 +7,7 @@ from datetime import timedelta, date, datetime
 import requests
 import json
 
-from model import connect_to_db, db, User, Entry
+from model import connect_to_db, db, User, Entry, Habit
 
 app = Flask(__name__)
 app.jinja_env.undefined = StrictUndefined
@@ -68,18 +68,21 @@ def show_today(user_id):
 
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
+    habits = Habit.query.filter_by(user_id=user_id).all()
 
     today = datetime.today()
 
     return render_template("today.html",
                                 user_id=user_id,
                                 user=user, 
-                                today=today)
+                                today=today,
+                                habits=habits)
 
 
 @app.route("/entry", methods=["POST"])
 def add_entry():
     """Adds an entry to the db"""
+
     user_id = session.get("user_id")
     mood = request.form.get("mood")
     grateful = request.form.get("grateful")
@@ -107,10 +110,29 @@ def show_entire_journal(user_id):
     user = User.query.filter_by(user_id=user_id).first()
     
     entries = Entry.query.filter_by(user_id=user_id).all()
+    habits= Habit.query.filter_by(user_id=user_id).all()
 
     return render_template("journal.html",
                             user=user,
-                            entries=entries)
+                            entries=entries,
+                            habits=habits)
+
+@app.route("/habit", methods=["POST"])
+def add_habit():
+    """Adds a habit to the db"""
+
+    user_id = session.get("user_id")
+    habit = request.form["habit"]
+
+    new_habit = Habit(user_id=user_id, habit=habit)
+
+    db.session.add(new_habit)
+    db.session.commit()
+
+    flash(f"New daily habit added!")
+
+    return redirect(f"/journal/{user_id}")
+
 
 
 

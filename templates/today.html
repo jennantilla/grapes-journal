@@ -38,12 +38,24 @@
                     <input class="journal-field" id="simplify" name="simplify" placeholder="I can SIMPLIFY today by...">
                 <br>
                 <br>
-                    <input type="submit" value="complete today's journal">
+                    <input type="submit" value="complete/update today's entry">
                 <br>
                 <br>
+            
+        </div>
+        <div class="col-5" id="notes">
+            <h4>Personal Daily Habits</h4>
+            {% for habit in habits %}
+            <input type="checkbox">{{ habit.habit }}
+            <br>
+            {% endfor %}
+            <br>
+            <h4>Notes</h4>
+            <textarea></textarea>
             </form>
         </div>
-        </div>
+
+    </div>
     </div>
 </div>
 

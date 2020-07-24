@@ -19,7 +19,7 @@ class User(db.Model):
 
 
 class Entry(db.Model):
-    """User's prep kits"""
+    """User's daily entry"""
 
     __tablename__ = "user_entries"
 
@@ -33,9 +33,27 @@ class Entry(db.Model):
     proud = db.Column(db.String(1000))
     excited = db.Column(db.String(1000))
     simplify = db.Column(db.String(1000))
+    habits_complete = db.Column(db.String(1000))
+    habits_incomplete = db.Column(db.String(1000))
 
     # Define relationship to User
     user = db.relationship("User", backref=db.backref("user_entries"))
+
+
+class Habit(db.Model):
+    """User's habits"""
+
+    __tablename__ = "user_habits"
+
+    habit_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), index=True)
+    creation_date = db.Column(db.DateTime, default=datetime.now)
+    habit = db.Column(db.String(1000))
+
+    # Define relationship to User
+    user = db.relationship("User", backref=db.backref("user_habits"))
+
+
 
 
 ##############################################################################
