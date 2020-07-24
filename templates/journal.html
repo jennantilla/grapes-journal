@@ -3,106 +3,93 @@
 {% block title %}GRAPES{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>{{ user.name }}'s Vineyard</h1>
-        </div>
-    </div>
-</div>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <p><em>random affirmation.</em> -{{ user.name }}, 2020</p>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h3>Monthly Stats</h3>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <p>Entry frequency</p>
-            <p>Habit success rate</p>
-            <p>Average mood</p>
-        </div>
-        <div class="col">
-            <p>Streak</p>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h3>Daily Habits</h3>
-        </div>
-    </div>
-
-    {% if habits %}
-        {% for habit in habits %}
-            <div class="row">
-                <div class="col">
-                    <p>{{ habit.habit }}</p>
-                </div>
+<div id="profile-page">
+    <div class="container" id="profile-header">
+        <div class="row mt-2">
+            <div class="col">
+                <h1>{{ user.name }}'s Vineyard</h1>
             </div>
-        {% endfor %}
-    {% endif %}
-
-    <div class="row">
-        <div class="col">
-            <h5>Add a habit you'd like to track daily</h5>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h6><em>{{ affirmation }}</em></h6>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col">
-            <form action="/habit" method="POST">
-                <label for="habit"></label>
-                    <input id="habit" name="habit">
-                <input type="submit">
+
+    {% if entries %}
+    <div class="container">
+        <div class="row mt-2 ml-2">
+            <div class="col-2" id="avatar">
+                <img src="/static/images/grumpy-grape.png" style="width:100px">
+            </div>
+            <div class="col-2 p-2" id="profile-component">
+                <p>Total entries</p>
+                <div class="progress-outline">
+                    <div class="progress-fill" style="width:50%">{{ entry_count }}</div>
+                </div>
+                <p>Entry streak</p>
+                <div class="progress-outline">
+                    <div class="progress-fill" style="width:75%">5 days</div>
+                </div>
+                <p>Prevailing mood: {{ mood }}</p>
+                
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-5 ml-2 p-2" id="profile-component">
+                <h4>Daily Habits</h4>
+                {% if habits %}
+                    <ul>
+                        {% for habit in habits %}
+                            <li>{{ habit.habit }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                <h6>Add a habit you'd like to track daily</h6>
+                <form action="/habit" method="POST">
+                    <label for="habit"></label>
+                        <input id="habit" name="habit">
+                    <input type="submit" value="add">
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-
-{% if entries %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h3>Journal Entries</h3>
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col" id="profile-component">
+                <h4>Journal Entries</h4>
+            </div>
+        </div>
+        <div class="row">
+            {% for entry in entries %}
+                <div class="col-3 m-2 p-2" id="profile-component">                
+                    <h6>{{ (entry.date).strftime("%B %d, %Y") }}</h6>
+                    <ul>
+                        <li class="journal-field">I am grateful for {{ entry.grateful }}</li>
+                        <li class="journal-field">I resolve to {{ entry.resolution }}</li>
+                        <li class="journal-field">I affirm that {{ entry.affirmation }}</li>
+                        <li class="journal-field">I am proud of {{ entry.proud }}</li>
+                        <li class="journal-field">I am excited for {{ entry.excited }}</li>
+                        <li class="journal-field">I can simplify today by {{ entry.simplify }}</li>
+                    </ul>
+                </div>         
+            {% endfor %}
         </div>
     </div>
-    <div class="row">
-        {% for entry in entries %}
-            <div class="col" id="journal-page">                
-                <h5>{{ (entry.date).strftime("%B %d, %Y") }}</h5>
-                <ul>
-                    <li class="journal-field">Grateful: {{ entry.grateful }}</li>
-                    <li class="journal-field">Resolution: {{ entry.resolution }}</li>
-                    <li class="journal-field">Affirmation: {{ entry.affirmation }}</li>
-                    <li class="journal-field">Proud: {{ entry.proud }}</li>
-                    <li class="journal-field">Excited: {{ entry.excited }}</li>
-                    <li class="journal-field">Simplify: {{ entry.simplify }}</li>
-                </ul>
-            </div>         
-        {% endfor %}
-    </div>
-</div>
 
-{% else %}
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h3>Your journal is empty! Navigate to the 'Today' tab to complete your first entry.</h3>
+    {% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-5 ml-2 p-2" id="profile-component">
+                <h3>Your journal is empty! Navigate to the 'Today' tab to complete your first entry.</h3>
+            </div>
         </div>
     </div>
-</div>
 {% endif %}
+</div>
 
 
 {% endblock %}

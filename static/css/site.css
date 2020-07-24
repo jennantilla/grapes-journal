@@ -19,22 +19,45 @@ textarea {
 }
 
 .journal-field {
-    font-size: 18px;
-    width: 75%;
+    width: 90%;
 }
 
 #journal-date {
     padding-top: 30px;
 }
 
-#journal-page {
-    background-color: white;
+/*#journal-page {
     margin: 5px;
-}
+}*/
 
 #notes {
     padding-top: 30px;
     padding-left: 150px;
+}
+
+#profile-page {
+    background-image: url("/static/images/vine.png");
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: right top;
+    color: #f7f7f7;
+}
+
+#profile-component {
+/*    background-color: #f7f7f7;*/
+    color: black;
+}
+
+.progress-fill {
+    background-color: green;
+    color: white;
+    padding: 1px;
+    text-align: center;
+}
+
+.progress-outline {
+    width: 150px;
+    background-color: white;
 }
 
 #today-entry {
@@ -43,4 +66,8 @@ textarea {
     background-repeat: no-repeat;
     background-position: center;
     margin: 5px;
+}
+
+.whine {
+    width: 100%;
 }

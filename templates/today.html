@@ -38,7 +38,7 @@
                     <input class="journal-field" id="simplify" name="simplify" placeholder="I can SIMPLIFY today by...">
                 <br>
                 <br>
-                    <input type="submit" value="complete/update today's entry">
+                    <input type="submit" value="complete today's entry">
                 <br>
                 <br>
             
@@ -46,12 +46,14 @@
         <div class="col-5" id="notes">
             <h4>Personal Daily Habits</h4>
             {% for habit in habits %}
-            <input type="checkbox">{{ habit.habit }}
+            <!-- <label for="habits-complete">{{ habit.habit }}</label> -->
+            <input type="checkbox" name="habits-complete" value="{{ habit.habit }}">{{ habit.habit }}
             <br>
             {% endfor %}
             <br>
-            <h4>Notes</h4>
-            <textarea></textarea>
+            <h4>Whine Time<img src="/static/images/wine-glass.png" style="height:25px" /></h4>
+            <p><em>Acknowledging the good is only part of the process of journalling. Use this space (if you wish) to record a worry.</em></p>
+            <textarea class="whine" name="whine"></textarea>
             </form>
         </div>
 

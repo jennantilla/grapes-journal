@@ -91,8 +91,10 @@ def add_entry():
     proud = request.form.get("proud")
     excited = request.form.get("excited")
     simplify = request.form.get("simplify")
+    habits_complete = request.form.get("habits-complete")
+    whine = request.form.get("whine")
 
-    new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, simplify=simplify)
+    new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, simplify=simplify, habits_complete=habits_complete, whine=whine)
 
     db.session.add(new_entry)
     db.session.commit()
@@ -108,14 +110,43 @@ def show_entire_journal(user_id):
 
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
+
     
+    response = requests.get("https://www.affirmations.dev/")
+    affirmation=response.json()["affirmation"]
+
+
     entries = Entry.query.filter_by(user_id=user_id).all()
+    entry_count = len(entries)
+
+    def find_mood_stats(entries):
+        """Displays count of moods reported in past entries"""
+        mood_counts = {"unripe": 0, "sweet": 0, "sour": 0, "rotten": 0}
+
+        for entry in entries:
+            if entry.mood == "unripe":
+                mood_counts["unripe"] += 1
+            if entry.mood == "sweet":
+                mood_counts["sweet"] += 1
+            if entry.mood == "sour":
+                mood_counts["sour"] += 1
+            if entry.mood == "rotten":
+                mood_counts["rotten"] += 1
+
+        return mood_counts
+
+    moods = find_mood_stats(entries)
+    most_frequent_mood = max(moods, key=moods.get)
+
     habits= Habit.query.filter_by(user_id=user_id).all()
 
     return render_template("journal.html",
                             user=user,
                             entries=entries,
-                            habits=habits)
+                            entry_count=entry_count,
+                            mood=most_frequent_mood,
+                            habits=habits,
+                            affirmation=affirmation)
 
 @app.route("/habit", methods=["POST"])
 def add_habit():
@@ -132,8 +163,6 @@ def add_habit():
     flash(f"New daily habit added!")
 
     return redirect(f"/journal/{user_id}")
-
-
 
 
 @app.route("/logout")

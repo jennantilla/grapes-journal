@@ -35,6 +35,7 @@ class Entry(db.Model):
     simplify = db.Column(db.String(1000))
     habits_complete = db.Column(db.String(1000))
     habits_incomplete = db.Column(db.String(1000))
+    whine = db.Column(db.String(5000))
 
     # Define relationship to User
     user = db.relationship("User", backref=db.backref("user_entries"))
