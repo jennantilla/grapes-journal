@@ -7,7 +7,7 @@ from datetime import timedelta, date, datetime
 import requests
 import json
 
-from model import connect_to_db, db, User, Entry, Habit
+from model import connect_to_db, db, User, Entry
 
 app = Flask(__name__)
 app.jinja_env.undefined = StrictUndefined
@@ -68,15 +68,13 @@ def show_today(user_id):
 
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
-    habits = Habit.query.filter_by(user_id=user_id).all()
 
     today = datetime.today()
 
     return render_template("today.html",
                                 user_id=user_id,
                                 user=user, 
-                                today=today,
-                                habits=habits)
+                                today=today,)
 
 
 @app.route("/entry", methods=["POST"])
@@ -90,16 +88,50 @@ def add_entry():
     affirmation = request.form.get("affirmation")
     proud = request.form.get("proud")
     excited = request.form.get("excited")
-    simplify = request.form.get("simplify")
-    habits_complete = request.form.get("habits-complete")
+    self_care = request.form.get("self-care")
+    jam = request.form.get("jam")
     whine = request.form.get("whine")
 
-    new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, simplify=simplify, habits_complete=habits_complete, whine=whine)
+    new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, self_care=self_care, jam=jam, whine=whine)
 
     db.session.add(new_entry)
     db.session.commit()
 
     flash(f"Today's entry was added to your journal!")
+
+    return redirect(f"/journal/{user_id}")
+
+@app.route("/edit_entry", methods=["POST"])
+def edit_entry():
+    """Edit an existing entry and commit to db"""
+
+    user_id = session.get("user_id")
+    entry_id = request.form.get("entry-id")
+    mood = request.form.get("mood")
+    grateful = request.form.get("grateful")
+    resolution = request.form.get("resolutions")
+    affirmation = request.form.get("affirmation")
+    proud = request.form.get("proud")
+    excited = request.form.get("excited")
+    self_care = request.form.get("self-care")
+    jam = request.form.get("jam")
+    whine = request.form.get("whine")
+
+    entry = (Entry.query.filter_by(entry_id=entry_id).first())
+
+    entry.mood = mood
+    entry.grateful = grateful
+    entry.resolution = resolution
+    entry.affirmation = affirmation
+    entry.proud = proud
+    entry.excited = excited
+    entry.self_care = self_care
+    entry.jam = jam
+    entry.whine = whine 
+
+    db.session.commit()
+
+    flash(f"Entry was updated!")    
 
     return redirect(f"/journal/{user_id}")
 
@@ -138,31 +170,12 @@ def show_entire_journal(user_id):
     moods = find_mood_stats(entries)
     most_frequent_mood = max(moods, key=moods.get)
 
-    habits= Habit.query.filter_by(user_id=user_id).all()
-
     return render_template("journal.html",
                             user=user,
                             entries=entries,
                             entry_count=entry_count,
-                            mood=most_frequent_mood,
-                            habits=habits,
+                            moods=moods,
                             affirmation=affirmation)
-
-@app.route("/habit", methods=["POST"])
-def add_habit():
-    """Adds a habit to the db"""
-
-    user_id = session.get("user_id")
-    habit = request.form["habit"]
-
-    new_habit = Habit(user_id=user_id, habit=habit)
-
-    db.session.add(new_habit)
-    db.session.commit()
-
-    flash(f"New daily habit added!")
-
-    return redirect(f"/journal/{user_id}")
 
 
 @app.route("/logout")

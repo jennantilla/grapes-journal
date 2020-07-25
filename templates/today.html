@@ -34,29 +34,26 @@
                 <label for="excited" class="acronym">E</label>
                     <input class="journal-field" id="excited" name="excited" placeholder="I am EXCITED to...">
                 <br>
-                <label for="simplify" class="acronym">S</label>
-                    <input class="journal-field" id="simplify" name="simplify" placeholder="I can SIMPLIFY today by...">
+                <label for="self-care" class="acronym">S</label>
+                    <input class="journal-field" id="self-care" name="self-care" placeholder="I can practice SELF-CARE by...">
                 <br>
                 <br>
-                    <input type="submit" value="complete today's entry">
                 <br>
                 <br>
             
         </div>
         <div class="col-5" id="notes">
-            <h4>Personal Daily Habits</h4>
-            {% for habit in habits %}
-            <!-- <label for="habits-complete">{{ habit.habit }}</label> -->
-            <input type="checkbox" name="habits-complete" value="{{ habit.habit }}">{{ habit.habit }}
-            <br>
-            {% endfor %}
+            <h4>Jammin'<img src="/static/images/jam.png" style="height:25px" /></h4>
+                <p><em>What is your #1 Priority today?<br>Identify your goal and what's necessary needed to complete it.</em></p>
+                <textarea class="whine" name="jam"></textarea>
             <br>
             <h4>Whine Time<img src="/static/images/wine-glass.png" style="height:25px" /></h4>
-            <p><em>Acknowledging the good is only part of the process of journalling. Use this space (if you wish) to record a worry.</em></p>
-            <textarea class="whine" name="whine"></textarea>
+                <p><em>Acknowledging the good is only part of the process of journalling. Use this space (if you wish) to record a worry.</em></p>
+                <textarea class="whine" name="whine"></textarea>
+
+            <input type="submit" value="complete today's entry">
             </form>
         </div>
-
     </div>
     </div>
 </div>

@@ -32,28 +32,12 @@ class Entry(db.Model):
     affirmation = db.Column(db.String(1000))
     proud = db.Column(db.String(1000))
     excited = db.Column(db.String(1000))
-    simplify = db.Column(db.String(1000))
-    habits_complete = db.Column(db.String(1000))
-    habits_incomplete = db.Column(db.String(1000))
+    self_care = db.Column(db.String(1000))
+    jam = db.Column(db.String(5000))
     whine = db.Column(db.String(5000))
 
     # Define relationship to User
     user = db.relationship("User", backref=db.backref("user_entries"))
-
-
-class Habit(db.Model):
-    """User's habits"""
-
-    __tablename__ = "user_habits"
-
-    habit_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), index=True)
-    creation_date = db.Column(db.DateTime, default=datetime.now)
-    habit = db.Column(db.String(1000))
-
-    # Define relationship to User
-    user = db.relationship("User", backref=db.backref("user_habits"))
-
 
 
 
@@ -61,9 +45,8 @@ class Habit(db.Model):
 # Helper functions
 
 def connect_to_db(app):
-    """Connect the database to our Flask app."""
+    """Connect the PostgreSQL database to our Flask app."""
 
-    # Configure to use our PostgreSQL database
     app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql:///grapes"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_ECHO"] = True

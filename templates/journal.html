@@ -18,45 +18,38 @@
         </div>
     </div>
 
-    {% if entries %}
+ 
     <div class="container">
         <div class="row mt-2 ml-2">
             <div class="col-2" id="avatar">
                 <img src="/static/images/grumpy-grape.png" style="width:100px">
             </div>
             <div class="col-2 p-2" id="profile-component">
-                <p>Total entries</p>
-                <div class="progress-outline">
-                    <div class="progress-fill" style="width:50%">{{ entry_count }}</div>
+                <div id="bars">Total entries
+                    <div class="progress-outline">
+                        <div class="progress-fill" style="width:{{ entry_count | int }}0px">{{ entry_count }}</div>
+                    </div>
                 </div>
-                <p>Entry streak</p>
-                <div class="progress-outline">
-                    <div class="progress-fill" style="width:75%">5 days</div>
+                <br>
+                <div id="bars">Streak days
+                    <div class="progress-outline">
+                        <div class="progress-fill" style="width:75%">5</div>
+                    </div>
                 </div>
-                <p>Prevailing mood: {{ mood }}</p>
-                
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-5 ml-2 p-2" id="profile-component">
-                <h4>Daily Habits</h4>
-                {% if habits %}
-                    <ul>
-                        {% for habit in habits %}
-                            <li>{{ habit.habit }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-                <h6>Add a habit you'd like to track daily</h6>
-                <form action="/habit" method="POST">
-                    <label for="habit"></label>
-                        <input id="habit" name="habit">
-                    <input type="submit" value="add">
-                </form>
+                <br>
+                <p>Mood</p>
+                    {% for mood in moods %}
+                    <div id="bars">{{ mood }}
+                        <div class="progress-outline">
+                            <div class="mood-fill" style="width:{{ moods[mood] | int }}0px">{{ moods[mood] }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
             </div>
         </div>
     </div>
 
+    {% if entries %}
     <div class="container">
         <div class="row mt-4">
             <div class="col" id="profile-component">
@@ -64,19 +57,104 @@
             </div>
         </div>
         <div class="row">
-            {% for entry in entries %}
-                <div class="col-3 m-2 p-2" id="profile-component">                
-                    <h6>{{ (entry.date).strftime("%B %d, %Y") }}</h6>
-                    <ul>
-                        <li class="journal-field">I am grateful for {{ entry.grateful }}</li>
-                        <li class="journal-field">I resolve to {{ entry.resolution }}</li>
-                        <li class="journal-field">I affirm that {{ entry.affirmation }}</li>
-                        <li class="journal-field">I am proud of {{ entry.proud }}</li>
-                        <li class="journal-field">I am excited for {{ entry.excited }}</li>
-                        <li class="journal-field">I can simplify today by {{ entry.simplify }}</li>
-                    </ul>
-                </div>         
-            {% endfor %}
+            <div class="col-3 m-2 p-2">      
+                {% for entry in entries %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                    {{ (entry.date).strftime("%B %d, %Y") }}
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="journal entry" aria-hidden="true">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" id="journal-entry-modal">
+                          <div class="modal-header">
+                            <h5 class="modal-title">{{ (entry.date).strftime("%B %d, %Y") }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form action="/edit_entry" method="POST">
+                                <div class="form-group">
+                                    <input class="form-control journal-field" name="entry-id" value="{{ entry.entry_id }}" hidden>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mood" value="unripe">
+                                        <label class="form-check-label" for="unripe">
+                                        Unripe
+                                        </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mood" value="sweet">
+                                        <label class="form-check-label" for="sweet">
+                                        Sweet
+                                        </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mood" value="sour">
+                                        <label class="form-check-label" for="sour">
+                                        Sour
+                                        </label>
+                                </div>
+                                <div class="form-check-inline">
+                                    <input class="form-check-input" type="radio" name="mood" value="rotten">
+                                        <label class="form-check-label" for="rotten">
+                                        Rotten
+                                        </label>
+                                </div>
+                                <div class="form-group row" id="edit-grapes">
+                                    <label for="grateful" class="col-3 col-form-label">I am grateful for</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control journal-field" id="grateful" name="grateful" value="{{ entry.grateful }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="edit-grapes">
+                                    <label for="resolution" class="col-3 col-form-label">I resolve to</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control journal-field" id="resolution" name="resolution" value="{{ entry.resolution }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="edit-grapes">
+                                <label for="affirmation" class="col-3 col-form-label">I affirm that</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control journal-field" id="affirmation" name="affirmation" value="{{ entry.affirmation }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="edit-grapes">
+                                <label for="proud" class="col-3 col-form-label">I am proud of</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control journal-field" id="proud" name="proud" value="{{ entry.proud }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="edit-grapes">
+                                <label for="excited" class="col-3 col-form-label">I am excited to</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control journal-field" id="excited" name="excited" value="{{ entry.excited }}">
+                                    </div>
+                                </div>
+                                <div class="form-group row" id="edit-grapes">
+                                <label for="self-care" class="col-3 col-form-label">I can self care by</label>
+                                    <div class="col-sm-9">
+                                        <input class="form-control journal-field" id="self-care" name="self-care" value="{{ entry.self_care }}">
+                                    </div>
+                                </div>
+                                <div class="form-group" id="edit-grapes">
+                                    <textarea class="form-control journal-field" id="jam" name="jam">{{ entry.jam }}</textarea>
+                                </div>
+                                <div class="form-group" id="edit-grapes">
+                                    <textarea class="form-control journal-field" id="whine" name="whine">{{ entry.whine }}</textarea>
+                                </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 
