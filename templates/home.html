@@ -12,40 +12,76 @@
         </div>
     </div>
 </div>
-<br>
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h4>Sign Up</h4>
+        <div class="col-8">
+            <h5>five minutes is all it takes to center your mind and ready yourself for the day ahead.</h5>
+            <h5>track indicators of mindfulness as well as daily most-important task.</h5>
+        </div>
+
+        <div class="col-4">
+            <h5>Sign up</h5>
             <form action="/register" method="POST">
-                <label for="name">Name:</label>
-                    <input type="text" name="name">
-                <label for="email">Email:</label>
-                    <input type="email" name="email">
-                <label for="password">Password:</label>
-                    <input type="password" name="password">
-                <input type="submit" value="Create Account">
-            </form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="email" name="name" aria-describedby="emailHelp" placeholder="Enter name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Create Account</button></form>OR
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signIn">Sign In</button>
+                </div>
         </div>
     </div>
+</div>
+<!-- Sign In Modal -->
+<div class="modal fade" id="signIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/register" method="POST">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </div>
+    </div>
+    </form>
+  </div>
 </div>
 
 <div class="container">
     <div class="row">
         <div class="col">
-            <h4>Log In</h4>
-            <form action="/login" method="POST">
-                <label for="email">Email:</label>
-                    <input type="email" name="email">
-                <label for="password">Password:</label>
-                    <input type="password" name="password">
-                <input type="submit" value="Log in">
-            </form>
+            <p><em>images on this site are from <a href='https://pngtree.com/'>pngtree.com</a></em></p>
         </div>
     </div>
 </div>
 
+            
+<!-- <a href='https://pngtree.com/so/wine-clipart'>wine-clipart png from pngtree.com</a>
 <a href='https://pngtree.com/so/wine-clipart'>wine-clipart png from pngtree.com</a>
 <a href='https://pngtree.com/so/green'>green png from pngtree.com</a>
 <a href='https://pngtree.com/so/cartoon-fruit'>cartoon-fruit png from pngtree.com</a>
@@ -54,5 +90,7 @@
 <a href='https://pngtree.com/so/style-icons'>style-icons png from pngtree.com</a>
 <a href='https://pngtree.com/so/style-icons'>style-icons png from pngtree.com</a>
 <a href='https://pngtree.com/so/style-icons'>style-icons png from pngtree.com</a>
+<a href='https://pngtree.com/so/grape'>grape png from pngtree.com</a>
+<a href='https://pngtree.com/so/jam'>jam png from pngtree.com</a> -->
 
 {% endblock %}

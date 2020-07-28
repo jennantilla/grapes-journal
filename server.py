@@ -94,6 +94,10 @@ def add_entry():
 
     new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, self_care=self_care, jam=jam, whine=whine)
 
+    user = (User.query.filter_by(user_id=user_id).first())
+
+    user.streak +=1
+
     db.session.add(new_entry)
     db.session.commit()
 
@@ -109,7 +113,7 @@ def edit_entry():
     entry_id = request.form.get("entry-id")
     mood = request.form.get("mood")
     grateful = request.form.get("grateful")
-    resolution = request.form.get("resolutions")
+    resolution = request.form.get("resolution")
     affirmation = request.form.get("affirmation")
     proud = request.form.get("proud")
     excited = request.form.get("excited")
@@ -132,6 +136,23 @@ def edit_entry():
     db.session.commit()
 
     flash(f"Entry was updated!")    
+
+    return redirect(f"/journal/{user_id}")
+
+@app.route("/change-avatar", methods=["POST"])
+def change_avatar():
+    """Updates the user's avatar on profile"""
+
+    user_id = session.get("user_id")
+    update = request.form.get("avatar")
+
+    user = (User.query.filter_by(user_id=user_id).first())
+
+    user.avatar = update
+
+    db.session.commit()
+
+    flash(f"Avatar saved!")    
 
     return redirect(f"/journal/{user_id}")
 

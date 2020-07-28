@@ -14,12 +14,25 @@ textarea {
     font-size: 35px;
 }
 
+#avatar {
+    width: 125px;
+}
+
+#change-avatar{
+    color: black;
+}
+
 #bars {
     display: inline;
 }
 
+#edit-grapes {
+
+}
+
 #grapes-prompt {
-    padding-left: 150px;
+    margin-left: 125px;
+    padding-top: 30px;
 }
 
 .journal-field {
@@ -30,18 +43,9 @@ textarea {
     color: black;
 }
 
-#journal-date {
-    padding-top: 30px;
-}
-
-/*#journal-page {
-    margin: 5px;
-}*/
-
 .mood-fill {
     background-color: orange;
     color: white;
-    border-radius: 25px;
     text-align: center;
 }
 
@@ -55,7 +59,6 @@ textarea {
 
 .progress-fill {
     background-color: green;
-    border-radius: 25px;
     color: white;
     text-align: center;
 }
@@ -65,7 +68,6 @@ textarea {
     border-style: solid;
     border-width: 1px;
     border-color: white;
-    border-radius: 25px;
 }
 
 #today-entry {

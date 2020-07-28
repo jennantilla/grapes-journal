@@ -22,29 +22,63 @@
     <div class="container">
         <div class="row mt-2 ml-2">
             <div class="col-2" id="avatar">
-                <img src="/static/images/grumpy-grape.png" style="width:100px">
+                <img id="avatar" src="/static/images/{{ user.avatar }}">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#change-avatar">
+                    <i class="fas fa-edit"></i>
+                </button>
             </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="change-avatar" tabindex="-1" role="dialog" aria-labelledby="change-avatar" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Choose Avatar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/change-avatar" method="POST">
+                        <input class= "hide" type="radio" name="avatar" value="juice.png">
+                            <label for="unripe"><img id="avatar" src="/static/images/juice.png"></label> 
+                        <input class="hide" type="radio" name="avatar" value="smiling-grapes.png">
+                            <label for="unripe"><img id="avatar" src="/static/images/smiling-grapes.png"></label>
+                        <input class= "hide" type="radio" name="avatar" value="grumpy-grape.png">
+                            <label for="unripe"><img id="avatar" src="/static/images/grumpy-grape.png"></label> 
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-2 p-2" id="profile-component">
                 <div id="bars">Total entries
                     <div class="progress-outline">
-                        <div class="progress-fill" style="width:{{ entry_count | int }}0px">{{ entry_count }}</div>
+                        <div class="progress-fill" style="width:100%">{{ entry_count }}</div>
                     </div>
                 </div>
                 <br>
                 <div id="bars">Streak days
                     <div class="progress-outline">
-                        <div class="progress-fill" style="width:75%">5</div>
+                        <div class="progress-fill" style="width:{{ user.streak }}0px">{{ user.streak }}</div>
                     </div>
                 </div>
-                <br>
-                <p>Mood</p>
-                    {% for mood in moods %}
-                    <div id="bars">{{ mood }}
+            </div>
+            <div class="col-2 p-2" id="profile-component">
+                    <div id="bars">Mood
+                        {% for mood in moods %}
                         <div class="progress-outline">
-                            <div class="mood-fill" style="width:{{ moods[mood] | int }}0px">{{ moods[mood] }}</div>
+                            <div class="mood-fill" style="width:{{ moods[mood] }}0px">{{ mood }}</div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
             </div>
         </div>
     </div>
@@ -59,7 +93,7 @@
         <div class="row">
             <div class="col-3 m-2 p-2">      
                 {% for entry in entries %}
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">
+                    <button type="button" class="btn btn-light" data-toggle="modal" data-target=".bd-example-modal-lg">
                     {{ (entry.date).strftime("%B %d, %Y") }}
                     </button>
 

@@ -6,8 +6,8 @@
 
 <div class="container">
     <div class="row" id="today-entry">
-        <div id="grapes-prompt" class="col-5">
-            <h3 id="journal-date">{{ today.strftime("%B %d, %Y") }}</h3>
+        <div id="grapes-prompt" class="col-4 offset-1">
+            <h3 id="journal-head">{{ today.strftime("%B %d, %Y") }}</h3>
             <form action="/entry" method="POST">
                 <label for="mood"><h4>How are you feeling today?</h4></label>
                 <br>
@@ -39,11 +39,11 @@
                 <br>
                 <br>
                 <br>
-                <br>
-            
+                <br>  
         </div>
-        <div class="col-5" id="notes">
-            <h4>Jammin'<img src="/static/images/jam.png" style="height:25px" /></h4>
+
+        <div class="col-4 offset-1" id="grapes-prompt">
+            <h4>Jammin'<img src="/static/images/jam-jar.png" style="height:25px" /></h4>
                 <p><em>What is your #1 Priority today?<br>Identify your goal and what's necessary needed to complete it.</em></p>
                 <textarea class="whine" name="jam"></textarea>
             <br>
