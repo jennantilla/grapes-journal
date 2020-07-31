@@ -11,12 +11,22 @@
             <form action="/entry" method="POST">
                 <label for="mood"><h4>How are you feeling today?</h4></label>
                 <br>
-                <input type="radio" name="mood" value="unripe" />Unripe
-                    <label for="unripe"><!-- <img src="https://i.pinimg.com/originals/ea/0c/95/ea0c953772b75cfd50dee8287d9eb1e3.jpg" width="30px"> --></label>  
-                <input type="radio" name="mood" value="sweet">Sweet
-                    <label for="sweet"><!-- <img src="https://previews.123rf.com/images/stockgiu/stockgiu1705/stockgiu170507652/79181671-kawaii-cute-happy-grape-fruit-vector-illustration.jpg" width="50px"> --></label>
-                <input type="radio" name="mood" value="sour">Sour
-                <input type="radio" name="mood" value="rotten">Rotten
+                <label for="unripe">
+                    <input class="hide" type="radio" name="mood" value="unripe">
+                    <i class="far fa-meh">Unripe</i>
+                </label>
+                <label for="sweet">  
+                    <input class="hide" type="radio" name="mood" value="sweet">
+                    <i class="far fa-smile">Sweet</i>
+                </label>
+                <label for="sweet">
+                    <input class="hide" type="radio" name="mood" value="sour">
+                    <i class="far fa-tired">Sour</i>
+                </label>
+                <label for="sweet">
+                    <input class="hide" type="radio" name="mood" value="rotten">
+                    <i class="far fa-angry">Rotten</i>
+                </label>
                 <br>
                 <br>
                 <label for="grateful" class="acronym">G</label>
@@ -35,7 +45,7 @@
                     <input class="journal-field" id="excited" name="excited" placeholder="I am EXCITED to...">
                 <br>
                 <label for="self-care" class="acronym">S</label>
-                    <input class="journal-field" id="self-care" name="self-care" placeholder="I can practice SELF-CARE by...">
+                    <input class="journal-field" id="self-care" name="self-care" placeholder="I will SELF-CARE by...">
                 <br>
                 <br>
                 <br>
@@ -44,7 +54,7 @@
 
         <div class="col-4 offset-1" id="grapes-prompt">
             <h4>Jammin'<img src="/static/images/jam-jar.png" style="height:25px" /></h4>
-                <p><em>What is your #1 Priority today?<br>Identify your goal and what's necessary needed to complete it.</em></p>
+                <p><em>What is your #1 Priority today?<br>Identify your goal and what's necessary to complete it.</em></p>
                 <textarea class="whine" name="jam"></textarea>
             <br>
             <h4>Whine Time<img src="/static/images/wine-glass.png" style="height:25px" /></h4>

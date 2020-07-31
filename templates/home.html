@@ -4,40 +4,39 @@
 
 {% block content %}
 
+<div class="home-body">
+
 <div class="container">
-    <div class="row">
-        <div class="col">
+    <div class="row mt-5">
+        <div class="col-6">
             <h1>GRAPES</h1>
             <h2>A quick, everyday mindset journal</h2>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-8">
-            <h5>five minutes is all it takes to center your mind and ready yourself for the day ahead.</h5>
-            <h5>track indicators of mindfulness as well as daily most-important task.</h5>
+            <br>
+            <h5>Three minutes is all it takes to center your thoughts and ready yourself for the day ahead.</h5>
+            <br>
+            <p><i class="fas fa-book-open fa-2x" id="home-graphics"></i>Follow the punny prompts to narrow your focus</p>
+            <p><i class="fas fa-search fa-2x" id="home-graphics"></i>Search for and edit previous entries</p>
+            <p><i class="fas fa-chart-bar fa-2x" id="home-graphics"></i>View your journal stats and trends</p>
         </div>
 
-        <div class="col-4">
+        <div class="col-4 offset-2">
             <h5>Sign up</h5>
             <form action="/register" method="POST">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" class="form-control" id="email" name="name" aria-describedby="emailHelp" placeholder="Enter name">
+                    <input type="text" class="form-control" id="name" name="name" aria-describedby="emailHelp" placeholder="Enter name">
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Create Account</button></form>OR
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signIn">Sign In</button>
+                    <button type="submit" class="btn btn-light">Create Account</button></form>     OR     
+                    <button type="button" class="btn btn-light" data-toggle="modal" data-target="#signIn">Sign In</button>
                 </div>
         </div>
     </div>
@@ -73,11 +72,12 @@
 </div>
 
 <div class="container">
-    <div class="row">
+    <div class="row my-5">
         <div class="col">
             <p><em>images on this site are from <a href='https://pngtree.com/'>pngtree.com</a></em></p>
         </div>
     </div>
+</div>
 </div>
 
             

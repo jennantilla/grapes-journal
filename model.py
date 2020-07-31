@@ -27,7 +27,7 @@ class Entry(db.Model):
 
     entry_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), index=True)
-    date = db.Column(db.DateTime, default=datetime.now)
+    date = db.Column(db.DateTime, default=datetime.strftime(datetime.today(), "%b %d %Y"))
     mood = db.Column(db.String(100))
     grateful = db.Column(db.String(1000))
     resolution = db.Column(db.String(1000))

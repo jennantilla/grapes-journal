@@ -24,7 +24,7 @@
             <div class="col-2" id="avatar">
                 <img id="avatar" src="/static/images/{{ user.avatar }}">
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#change-avatar">
+                <button type="button" class="btn btn-light btn-sm" data-toggle="modal" data-target="#change-avatar">
                     <i class="fas fa-edit"></i>
                 </button>
             </div>
@@ -42,11 +42,11 @@
                   </div>
                   <div class="modal-body">
                     <form action="/change-avatar" method="POST">
-                        <input class= "hide" type="radio" name="avatar" value="juice.png">
+                        <input type="radio" name="avatar" value="juice.png">
                             <label for="unripe"><img id="avatar" src="/static/images/juice.png"></label> 
-                        <input class="hide" type="radio" name="avatar" value="smiling-grapes.png">
+                        <input type="radio" name="avatar" value="smiling-grapes.png">
                             <label for="unripe"><img id="avatar" src="/static/images/smiling-grapes.png"></label>
-                        <input class= "hide" type="radio" name="avatar" value="grumpy-grape.png">
+                        <input type="radio" name="avatar" value="grumpy-grape.png">
                             <label for="unripe"><img id="avatar" src="/static/images/grumpy-grape.png"></label> 
                   </div>
                   <div class="modal-footer">
@@ -91,10 +91,25 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3 m-2 p-2">      
-                {% for entry in entries %}
-                    <button type="button" class="btn btn-light" data-toggle="modal" data-target=".bd-example-modal-lg">
-                    {{ (entry.date).strftime("%B %d, %Y") }}
+            <div class="col-2 m-2 p-2">
+                <form id="filter-entry-view" action="/entries.json" method="POST">
+                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="today">Today</button>
+                    <br>
+                    <input type="radio" class="entry-tabs" id="view" name="view-tab"value="week">This Week</button>
+                    <br>
+                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="month">This Month</button>
+                    <br>
+                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="year">This Year</button>
+                    <br>
+                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="all">All Time</button>
+                    <input type="submit">
+                </form>
+            </div>
+
+            <div class="col-8 m-2 p-2">
+                <div id="entry-card">
+                    <!-- Button -->
+                    <button type="button" class="btn btn-light" id="entry-view-btn" data-toggle="modal" data-target=".bd-example-modal-lg">
                     </button>
 
                     <!-- Modal -->
@@ -102,15 +117,19 @@
                       <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content" id="journal-entry-modal">
                           <div class="modal-header">
-                            <h5 class="modal-title">{{ (entry.date).strftime("%B %d, %Y") }}</h5>
+                            <h5 class="modal-title"></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            <form action="/edit_entry" method="POST">
+                              <form action="/edit_entry" method="POST">
                                 <div class="form-group">
-                                    <input class="form-control journal-field" name="entry-id" value="{{ entry.entry_id }}" hidden>
+                                    <div class="form-group row">
+                                    <div class="col-sm-9">
+                                        <input class="form-control journal-field hide" id="entry-id" name="entry-id">
+                                    </div>
+                                </div>
                                 </div>
                                 <div class="form-check-inline">
                                     <input class="form-check-input" type="radio" name="mood" value="unripe">
@@ -139,44 +158,44 @@
                                 <div class="form-group row" id="edit-grapes">
                                     <label for="grateful" class="col-3 col-form-label">I am grateful for</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="grateful" name="grateful" value="{{ entry.grateful }}">
+                                        <input class="form-control journal-field" id="grateful" name="grateful">
                                     </div>
                                 </div>
                                 <div class="form-group row" id="edit-grapes">
                                     <label for="resolution" class="col-3 col-form-label">I resolve to</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="resolution" name="resolution" value="{{ entry.resolution }}">
+                                        <input class="form-control journal-field" id="resolution" name="resolution">
                                     </div>
                                 </div>
                                 <div class="form-group row" id="edit-grapes">
                                 <label for="affirmation" class="col-3 col-form-label">I affirm that</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="affirmation" name="affirmation" value="{{ entry.affirmation }}">
+                                        <input class="form-control journal-field" id="affirmation" name="affirmation">
                                     </div>
                                 </div>
                                 <div class="form-group row" id="edit-grapes">
                                 <label for="proud" class="col-3 col-form-label">I am proud of</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="proud" name="proud" value="{{ entry.proud }}">
+                                        <input class="form-control journal-field" id="proud" name="proud">
                                     </div>
                                 </div>
                                 <div class="form-group row" id="edit-grapes">
                                 <label for="excited" class="col-3 col-form-label">I am excited to</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="excited" name="excited" value="{{ entry.excited }}">
+                                        <input class="form-control journal-field" id="excited" name="excited">
                                     </div>
                                 </div>
                                 <div class="form-group row" id="edit-grapes">
                                 <label for="self-care" class="col-3 col-form-label">I can self care by</label>
                                     <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="self-care" name="self-care" value="{{ entry.self_care }}">
+                                        <input class="form-control journal-field" id="self-care" name="self-care">
                                     </div>
                                 </div>
                                 <div class="form-group" id="edit-grapes">
-                                    <textarea class="form-control journal-field" id="jam" name="jam">{{ entry.jam }}</textarea>
+                                    <textarea class="form-control journal-field" id="jam" name="jam"></textarea>
                                 </div>
                                 <div class="form-group" id="edit-grapes">
-                                    <textarea class="form-control journal-field" id="whine" name="whine">{{ entry.whine }}</textarea>
+                                    <textarea class="form-control journal-field" id="whine" name="whine"></textarea>
                                 </div>
                           </div>
                           <div class="modal-footer">
@@ -185,9 +204,8 @@
                             </form>
                           </div>
                         </div>
-                      </div>
                     </div>
-                {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -202,6 +220,8 @@
     </div>
 {% endif %}
 </div>
+
+<script src="/static/js/journal-page.js"></script>
 
 
 {% endblock %}
