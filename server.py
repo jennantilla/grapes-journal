@@ -201,34 +201,15 @@ def show_entire_journal(user_id):
                             moods=moods,
                             affirmation=affirmation)
 
-
-@app.route("/entries.json", methods=["POST"])
+@app.route("/api/entries")
 def find_entries():
-    """Returns a dictionary of filtered entries and details"""
+    """Returns a dictionary of entries and details"""
 
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
-    entry_range = request.form.get("view-tab")
-
-    today = datetime.today().date()
-    # week_range = today - timedelta(days=7)
-    # num_days = calendar.monthrange(year, month)[1]
-    # current_month = today.month
-    # current_year = today.year 
-
-    # start_month_range = datetime.date(current_year,current_month,1)
-    # end_month_range = datetime.date(current_year,current_month,num_days)
     
-
-    if entry_range == "all":
-        all_entries = Entry.query.filter_by(user_id=user_id).all()
-    # elif entry_range == "week":
-    #     all_entries = Entry.query.filter_by(user_id=user_id, )
-    # elif entry_range == "month":
-    #     all_entries = Entry.query.filter(Entry.user_id==user_id, Entry.date >= start_month_range, Entry.date <= end_month_range).all()
-    elif entry_range == "today":
-        all_entries = [Entry.query.filter_by(user_id=user_id, date=today).first()]
-
+    all_entries = Entry.query.filter_by(user_id=user_id).all()
+   
     entry_list = []
    
     for entry in all_entries: 
@@ -248,8 +229,74 @@ def find_entries():
 
         entry_list.append(entry_info)
 
-    return jsonify(entry_list)
+    return jsonify({"entries" : entry_list})
 
+@app.route("/api/today_entry")
+def find_today():
+    """Returns a dictionary of entries and details"""
+
+    user_id = session.get("user_id")
+    user = User.query.filter_by(user_id=user_id).first()
+
+    today = date.today()
+    
+    entry = Entry.query.filter_by(user_id=user_id, date=today).first()
+
+    entry_info = {}
+    entry_info["entry_id"] = entry.entry_id
+    entry_info["date"] = entry.date
+    entry_info["mood"] = entry.mood
+    entry_info["grateful"] = entry.grateful
+    entry_info["resolution"] = entry.resolution
+    entry_info["affirmation"] = entry.affirmation
+    entry_info["proud"] = entry.proud
+    entry_info["excited"] = entry.excited
+    entry_info["self_care"] = entry.self_care
+    entry_info["jam"] = entry.jam
+    entry_info["whine"] = entry.whine
+
+    return jsonify({"entries" : [entry_info]})
+
+
+@app.route("/mood.json")
+def get_moods():
+    user_id = session.get("user_id")
+    user = User.query.filter_by(user_id=user_id).first()
+
+    results = Entry.query.filter_by(user_id=user_id).all()
+
+    mood = {"unripe": 0, "sweet": 0, "sour": 0, "rotten":0}
+
+    for result in results:
+        if result.mood == "unripe":
+            mood["unripe"] += 1
+        if result.mood == "sweet":
+            mood["sweet"] += 1
+        if result.mood == "sour":
+            mood["sour"] += 1
+        if result.mood == "rotten":
+            mood["rotten"] += 1
+
+    data_dict = {
+                "labels": [
+                    "unripe",
+                    "sweet",
+                    "sour",
+                    "rotten"
+                ],
+                "datasets": [
+                    {
+                        "data": [mood["unripe"], mood["sweet"], mood["sour"], mood["rotten"]],
+                        "backgroundColor": [
+                            "#dbf57d",
+                            "#71bd48",
+                            "#893c99",
+                            "#451c2f"
+                        ],
+                    }],
+            }
+    
+    return jsonify(data_dict)
 
 @app.route("/logout")
 def logout():

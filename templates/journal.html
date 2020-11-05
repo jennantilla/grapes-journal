@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <h6><em>{{ affirmation }}</em></h6>
+                <h4><em>{{ affirmation }}</em></h4>
             </div>
         </div>
     </div>
@@ -59,169 +59,78 @@
             </div>
 
             <div class="col-2 p-2" id="profile-component">
-                <div id="bars">Total entries
+                <div id="bars"><h5>Total entries</h5>
                     <div class="progress-outline">
                         <div class="progress-fill" style="width:100%">{{ entry_count }}</div>
                     </div>
                 </div>
                 <br>
-                <div id="bars">Streak days
+                <div id="bars"><h5>Streak days</h5>
                     <div class="progress-outline">
                         <div class="progress-fill" style="width:{{ user.streak }}0px">{{ user.streak }}</div>
                     </div>
                 </div>
             </div>
-            <div class="col-2 p-2" id="profile-component">
-                    <div id="bars">Mood
-                        {% for mood in moods %}
-                        <div class="progress-outline">
-                            <div class="mood-fill" style="width:{{ moods[mood] }}0px">{{ mood }}</div>
-                        </div>
-                        {% endfor %}
-                    </div>
+            <div class="col-4" style="height: 200px"><h5>Mood</h5>
+                <canvas id="myChart" style="width: 10%"></canvas>
             </div>
         </div>
     </div>
 
-    {% if entries %}
-    <div class="container">
+
+    <div class="container" id="entries-block">
         <div class="row mt-4">
             <div class="col" id="profile-component">
-                <h4>Journal Entries</h4>
+                <h3>Journal Entries</h3>
             </div>
         </div>
-        <div class="row">
-            <div class="col-2 m-2 p-2">
-                <form id="filter-entry-view" action="/entries.json" method="POST">
-                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="today">Today</button>
-                    <br>
-                    <input type="radio" class="entry-tabs" id="view" name="view-tab"value="week">This Week</button>
-                    <br>
-                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="month">This Month</button>
-                    <br>
-                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="year">This Year</button>
-                    <br>
-                    <input type="radio" class="entry-tabs" id="view" name="view-tab" value="all">All Time</button>
-                    <input type="submit">
-                </form>
+        <div class="row justify-content-between">
+            <div class="col-1">
+                <div id="showToday"></div>
+                <div id="showAll"></div>
             </div>
-
-            <div class="col-8 m-2 p-2">
-                <div id="entry-card">
-                    <!-- Button -->
-                    <button type="button" class="btn btn-light" id="entry-view-btn" data-toggle="modal" data-target=".bd-example-modal-lg">
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="journal entry" aria-hidden="true">
-                      <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content" id="journal-entry-modal">
-                          <div class="modal-header">
-                            <h5 class="modal-title"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                              <form action="/edit_entry" method="POST">
-                                <div class="form-group">
-                                    <div class="form-group row">
-                                    <div class="col-sm-9">
-                                        <input class="form-control journal-field hide" id="entry-id" name="entry-id">
-                                    </div>
-                                </div>
-                                </div>
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="radio" name="mood" value="unripe">
-                                        <label class="form-check-label" for="unripe">
-                                        Unripe
-                                        </label>
-                                </div>
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="radio" name="mood" value="sweet">
-                                        <label class="form-check-label" for="sweet">
-                                        Sweet
-                                        </label>
-                                </div>
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="radio" name="mood" value="sour">
-                                        <label class="form-check-label" for="sour">
-                                        Sour
-                                        </label>
-                                </div>
-                                <div class="form-check-inline">
-                                    <input class="form-check-input" type="radio" name="mood" value="rotten">
-                                        <label class="form-check-label" for="rotten">
-                                        Rotten
-                                        </label>
-                                </div>
-                                <div class="form-group row" id="edit-grapes">
-                                    <label for="grateful" class="col-3 col-form-label">I am grateful for</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="grateful" name="grateful">
-                                    </div>
-                                </div>
-                                <div class="form-group row" id="edit-grapes">
-                                    <label for="resolution" class="col-3 col-form-label">I resolve to</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="resolution" name="resolution">
-                                    </div>
-                                </div>
-                                <div class="form-group row" id="edit-grapes">
-                                <label for="affirmation" class="col-3 col-form-label">I affirm that</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="affirmation" name="affirmation">
-                                    </div>
-                                </div>
-                                <div class="form-group row" id="edit-grapes">
-                                <label for="proud" class="col-3 col-form-label">I am proud of</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="proud" name="proud">
-                                    </div>
-                                </div>
-                                <div class="form-group row" id="edit-grapes">
-                                <label for="excited" class="col-3 col-form-label">I am excited to</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="excited" name="excited">
-                                    </div>
-                                </div>
-                                <div class="form-group row" id="edit-grapes">
-                                <label for="self-care" class="col-3 col-form-label">I can self care by</label>
-                                    <div class="col-sm-9">
-                                        <input class="form-control journal-field" id="self-care" name="self-care">
-                                    </div>
-                                </div>
-                                <div class="form-group" id="edit-grapes">
-                                    <textarea class="form-control journal-field" id="jam" name="jam"></textarea>
-                                </div>
-                                <div class="form-group" id="edit-grapes">
-                                    <textarea class="form-control journal-field" id="whine" name="whine"></textarea>
-                                </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                            </form>
-                          </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-8">
+                <div id="today-view"></div>
+                <div id="entry"></div>
+            </div>
+                <div class="col-3"></div>
             </div>
         </div>
     </div>
-
-    {% else %}
-    <div class="container">
-        <div class="row">
-            <div class="col-5 ml-2 p-2" id="profile-component">
-                <h3>Your journal is empty! Navigate to the 'Today' tab to complete your first entry.</h3>
-            </div>
-        </div>
-    </div>
-{% endif %}
 </div>
 
-<script src="/static/js/journal-page.js"></script>
+<script src="/static/js/entries.jsx" type="text/jsx"></script>
+
+<script>
+
+Chart.pluginService.register({
+  beforeDraw: function(chart) {
+    var width = chart.chart.width,
+        height = chart.chart.height,
+        ctx = chart.chart.ctx,
+        type = chart.config.type;
+  }
+});
+
+
+let ctx_dial = $('#myChart').get(0).getContext('2d');
+
+$.get('/mood.json', function (data) {
+    let myMoodChart = new Chart(ctx_dial, {
+                                        type: 'pie',
+                                        data: data,
+                                        options: {
+                                            legend: {
+                                                display: false
+                                                },
+                                            responsive: true,
+                                            maintainAspectRatio: false
+                                            },
+                                        });
+    });
+
+
+</script>
 
 
 {% endblock %}

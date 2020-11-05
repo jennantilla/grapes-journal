@@ -75,12 +75,20 @@ body {
     text-align: center;
 }
 
+.modal {
+    color: black;
+}
+
 #profile-page {
     background-image: url("/static/images/vine.png");
     background-size: 40%;
     background-repeat: no-repeat;
     background-position: right top;
     color: #f7f7f7;
+}
+
+#profile-header {
+    margin-top: 25px;
 }
 
 .progress-fill {
@@ -118,4 +126,16 @@ body {
 
 .show {
   display: block;
+}
+
+.every-entry {
+    margin: 10px;
+    border-color: white;
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
+}
+
+#entries-block {
+    margin-top: 25px;
 }
