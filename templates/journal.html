@@ -12,15 +12,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col-7">
                 <h4><em>{{ affirmation }}</em></h4>
             </div>
         </div>
     </div>
-
  
     <div class="container">
-        <div class="row mt-2 ml-2">
+        <div class="row mt-5 ml-2">
             <div class="col-2" id="avatar">
                 <img id="avatar" src="/static/images/{{ user.avatar }}">
                 <!-- Button trigger modal -->
@@ -28,7 +27,6 @@
                     <i class="fas fa-edit"></i>
                 </button>
             </div>
-
 
             <!-- Modal -->
             <div class="modal fade" id="change-avatar" tabindex="-1" role="dialog" aria-labelledby="change-avatar" aria-hidden="true">
@@ -59,24 +57,13 @@
             </div>
 
             <div class="col-2 p-2" id="profile-component">
-                <div id="bars"><h5>Total entries</h5>
-                    <div class="progress-outline">
-                        <div class="progress-fill" style="width:100%">{{ entry_count }}</div>
-                    </div>
-                </div>
-                <br>
-                <div id="bars"><h5>Streak days</h5>
-                    <div class="progress-outline">
-                        <div class="progress-fill" style="width:{{ user.streak }}0px">{{ user.streak }}</div>
-                    </div>
-                </div>
+                <div id="entry-count"></div>
             </div>
-            <div class="col-4" style="height: 200px"><h5>Mood</h5>
+            <div class="col-4" style="height: 150px"><h5>Mood</h5>
                 <canvas id="myChart" style="width: 10%"></canvas>
             </div>
         </div>
     </div>
-
 
     <div class="container" id="entries-block">
         <div class="row mt-4">
@@ -100,37 +87,6 @@
 </div>
 
 <script src="/static/js/entries.jsx" type="text/jsx"></script>
-
-<script>
-
-Chart.pluginService.register({
-  beforeDraw: function(chart) {
-    var width = chart.chart.width,
-        height = chart.chart.height,
-        ctx = chart.chart.ctx,
-        type = chart.config.type;
-  }
-});
-
-
-let ctx_dial = $('#myChart').get(0).getContext('2d');
-
-$.get('/mood.json', function (data) {
-    let myMoodChart = new Chart(ctx_dial, {
-                                        type: 'pie',
-                                        data: data,
-                                        options: {
-                                            legend: {
-                                                display: false
-                                                },
-                                            responsive: true,
-                                            maintainAspectRatio: false
-                                            },
-                                        });
-    });
-
-
-</script>
-
+<script src="/static/js/mood-chart.js"></script>
 
 {% endblock %}

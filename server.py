@@ -15,11 +15,13 @@ app.jinja_env.auto_reload = True
 
 app.secret_key = "ABC"
 
+
 @app.route("/")
 def show_homepage():
     """Displays homepage"""
 
     return render_template("home.html")
+
 
 @app.route("/login", methods=["POST"])
 def log_in():
@@ -53,7 +55,6 @@ def add_user():
 
     user = User(name=name, email=email, password=password)
 
-
     db.session.add(user)
     db.session.commit()
 
@@ -72,9 +73,9 @@ def show_today(user_id):
     today = datetime.today()
 
     return render_template("today.html",
-                                user_id=user_id,
-                                user=user, 
-                                today=today,)
+                           user_id=user_id,
+                           user=user,
+                           today=today,)
 
 
 @app.route("/entry", methods=["POST"])
@@ -92,11 +93,12 @@ def add_entry():
     jam = request.form.get("jam")
     whine = request.form.get("whine")
 
-    new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution, affirmation=affirmation, proud=proud, excited=excited, self_care=self_care, jam=jam, whine=whine)
+    new_entry = Entry(user_id=user_id, mood=mood, grateful=grateful, resolution=resolution,
+                      affirmation=affirmation, proud=proud, excited=excited, self_care=self_care, jam=jam, whine=whine)
 
     user = (User.query.filter_by(user_id=user_id).first())
 
-    user.streak +=1
+    user.streak += 1
 
     db.session.add(new_entry)
     db.session.commit()
@@ -105,39 +107,6 @@ def add_entry():
 
     return redirect(f"/journal/{user_id}")
 
-@app.route("/edit_entry", methods=["POST"])
-def edit_entry():
-    """Edit an existing entry and commit to db"""
-
-    user_id = session.get("user_id")
-    entry_id = request.form.get("entry-id")
-    mood = request.form.get("mood")
-    grateful = request.form.get("grateful")
-    resolution = request.form.get("resolution")
-    affirmation = request.form.get("affirmation")
-    proud = request.form.get("proud")
-    excited = request.form.get("excited")
-    self_care = request.form.get("self-care")
-    jam = request.form.get("jam")
-    whine = request.form.get("whine")
-
-    entry = (Entry.query.filter_by(entry_id=entry_id).first())
-
-    entry.mood = mood
-    entry.grateful = grateful
-    entry.resolution = resolution
-    entry.affirmation = affirmation
-    entry.proud = proud
-    entry.excited = excited
-    entry.self_care = self_care
-    entry.jam = jam
-    entry.whine = whine 
-
-    db.session.commit()
-
-    flash(f"Entry was updated!")    
-
-    return redirect(f"/journal/{user_id}")
 
 @app.route("/change-avatar", methods=["POST"])
 def change_avatar():
@@ -152,7 +121,7 @@ def change_avatar():
 
     db.session.commit()
 
-    flash(f"Avatar saved!")    
+    flash("Avatar saved!")
 
     return redirect(f"/journal/{user_id}")
 
@@ -164,42 +133,13 @@ def show_entire_journal(user_id):
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
 
-    
     response = requests.get("https://www.affirmations.dev/")
-    affirmation=response.json()["affirmation"]
-
-
-    entries = Entry.query.filter_by(user_id=user_id).all()
-    entry_count = len(entries)
-
-    today = datetime.today()
-
-    def find_mood_stats(entries):
-        """Displays count of moods reported in past entries"""
-        mood_counts = {"unripe": 0, "sweet": 0, "sour": 0, "rotten": 0}
-
-        for entry in entries:
-            if entry.mood == "unripe":
-                mood_counts["unripe"] += 1
-            if entry.mood == "sweet":
-                mood_counts["sweet"] += 1
-            if entry.mood == "sour":
-                mood_counts["sour"] += 1
-            if entry.mood == "rotten":
-                mood_counts["rotten"] += 1
-
-        return mood_counts
-
-    moods = find_mood_stats(entries)
-    most_frequent_mood = max(moods, key=moods.get)
+    affirmation = response.json()["affirmation"]
 
     return render_template("journal.html",
-                            user=user,
-                            entries=entries,
-                            entry_count=entry_count,
-                            today=today,
-                            moods=moods,
-                            affirmation=affirmation)
+                           user=user,
+                           affirmation=affirmation)
+
 
 @app.route("/api/entries")
 def find_entries():
@@ -207,12 +147,12 @@ def find_entries():
 
     user_id = session.get("user_id")
     user = User.query.filter_by(user_id=user_id).first()
-    
+
     all_entries = Entry.query.filter_by(user_id=user_id).all()
-   
+
     entry_list = []
-   
-    for entry in all_entries: 
+
+    for entry in all_entries:
 
         entry_info = {}
         entry_info["entry_id"] = entry.entry_id
@@ -229,17 +169,16 @@ def find_entries():
 
         entry_list.append(entry_info)
 
-    return jsonify({"entries" : entry_list})
+    return jsonify({"entries": entry_list})
+
 
 @app.route("/api/today_entry")
 def find_today():
     """Returns a dictionary of entries and details"""
 
     user_id = session.get("user_id")
-    user = User.query.filter_by(user_id=user_id).first()
-
     today = date.today()
-    
+
     entry = Entry.query.filter_by(user_id=user_id, date=today).first()
 
     entry_info = {}
@@ -255,7 +194,7 @@ def find_today():
     entry_info["jam"] = entry.jam
     entry_info["whine"] = entry.whine
 
-    return jsonify({"entries" : [entry_info]})
+    return jsonify({"entries": [entry_info]})
 
 
 @app.route("/mood.json")
@@ -265,7 +204,7 @@ def get_moods():
 
     results = Entry.query.filter_by(user_id=user_id).all()
 
-    mood = {"unripe": 0, "sweet": 0, "sour": 0, "rotten":0}
+    mood = {"unripe": 0, "sweet": 0, "sour": 0, "rotten": 0}
 
     for result in results:
         if result.mood == "unripe":
@@ -278,25 +217,26 @@ def get_moods():
             mood["rotten"] += 1
 
     data_dict = {
-                "labels": [
-                    "unripe",
-                    "sweet",
-                    "sour",
-                    "rotten"
+        "labels": [
+            "unripe",
+            "sweet",
+            "sour",
+            "rotten"
+        ],
+        "datasets": [
+            {
+                "data": [mood["unripe"], mood["sweet"], mood["sour"], mood["rotten"]],
+                "backgroundColor": [
+                    "#dbf57d",
+                    "#71bd48",
+                    "#893c99",
+                    "#451c2f"
                 ],
-                "datasets": [
-                    {
-                        "data": [mood["unripe"], mood["sweet"], mood["sour"], mood["rotten"]],
-                        "backgroundColor": [
-                            "#dbf57d",
-                            "#71bd48",
-                            "#893c99",
-                            "#451c2f"
-                        ],
-                    }],
-            }
-    
+            }],
+    }
+
     return jsonify(data_dict)
+
 
 @app.route("/logout")
 def logout():
