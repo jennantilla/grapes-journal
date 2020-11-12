@@ -1,123 +1,119 @@
-html,
+chtml,
 body {
-    height: 100%;
-    background-color: #ac60cc;
-    font-family: 'Nunito', sans-serif;
-    z-index: 0;
+  height: 100%;
+  background-color: #ac60cc;
+  font-family: "Nunito", sans-serif;
+  z-index: 0;
 }
 
 .acronym {
-    font-size: 35px;
+  font-size: 35px;
 }
 
 #avatar {
-    width: 125px;
+  width: 125px;
 }
 
-#change-avatar{
-    color: black;
+#change-avatar {
+  color: black;
 }
 
 #bars {
-    display: inline;
-}
-
-#edit-grapes {
-
+  display: inline;
 }
 
 #entry-card {
-    padding: 10px;
-    color: white;
+  padding: 10px;
+  color: white;
 }
 
 .entry-tabs {
-    color: white;
-    text-align: left;
-    background-color: transparent;
-    border: none;
+  color: white;
+  text-align: left;
+  background-color: transparent;
+  border: none;
 }
 
 .entry-tabs:hover {
-    color: #d0e0a2;
+  color: #d0e0a2;
 }
 
 .entry-tabs:focus {
-    color: gray;
-    background-color: #d0e0a2;
-    outline-color: gray;
+  color: gray;
+  background-color: #d0e0a2;
+  outline-color: gray;
 }
 
 #grapes-prompt {
-    margin-left: 125px;
-    padding-top: 30px;
+  margin-left: 125px;
+  padding-top: 30px;
 }
 
 .home-body {
-    color:white;
+  color: white;
 }
 
 #home-graphics {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .journal-field {
-    width: 90%;
+  width: 90%;
 }
 
 #journal-entry-modal {
-    color: black;
+  color: black;
 }
 
 .mood-fill {
-    background-color: orange;
-    color: white;
-    text-align: center;
+  background-color: orange;
+  color: white;
+  text-align: center;
 }
 
 .modal {
-    color: black;
+  color: black;
 }
 
 #profile-page {
-    background-image: url("/static/images/vine.png");
-    background-size: 40%;
-    background-repeat: no-repeat;
-    background-position: right top;
-    color: #f7f7f7;
+  background-image: url("/static/images/vine.png");
+  background-size: 40%;
+  background-repeat: no-repeat;
+  background-position: right top;
+  color: #f7f7f7;
 }
 
 #profile-header {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .progress-fill {
-    background-color: green;
-    color: white;
-    text-align: center;
+  background-color: green;
+  color: white;
+  text-align: center;
 }
 
 .progress-outline {
-    width: 102px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: white;
+  width: 102px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: white;
 }
 
 .selected {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #today-entry {
-    background-image: url("/static/images/open-notebook.png");
-    background-size: 80%;
-    background-repeat: no-repeat;
-    background-position: center;
-    margin: 5px;
+  background-image: url("/static/images/open-notebook.png");
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 5px;
 }
 
 .whine {
-    width: 100%;
+  width: 100%;
 }
 
 .hide {
@@ -129,13 +125,13 @@ body {
 }
 
 .every-entry {
-    margin: 10px;
-    border-color: white;
-    border-style: solid;
-    border-width: 1px;
-    padding: 10px;
+  margin: 10px;
+  border-color: white;
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
 }
 
 #entries-block {
-    margin-top: 25px;
+  margin-top: 25px;
 }
