@@ -9,6 +9,8 @@ import json
 
 from model import connect_to_db, db, User, Entry
 
+connect_to_db(app)
+
 app = Flask(__name__)
 app.jinja_env.undefined = StrictUndefined
 app.jinja_env.auto_reload = True
