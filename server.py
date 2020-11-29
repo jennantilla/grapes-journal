@@ -200,7 +200,6 @@ def find_today():
 @app.route("/mood.json")
 def get_moods():
     user_id = session.get("user_id")
-    user = User.query.filter_by(user_id=user_id).first()
 
     results = Entry.query.filter_by(user_id=user_id).all()
 
